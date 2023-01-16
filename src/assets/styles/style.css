@@ -40,9 +40,12 @@ body,
   width: 240px;
 }
 
+.header_indent {
+  position: relative;
+}
 .header_indent .MuiAppBar-root {
-  margin-left: 240px;
-  transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  left: 240px;
+  transition: left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 }
 
 .main_indent {
@@ -87,6 +90,7 @@ body,
 }
 .footer_indent {
   margin-left: 240px;
+  transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 }
 .footer__container {
   display: flex !important;

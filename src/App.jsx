@@ -1,9 +1,11 @@
-import React from 'react'
-import './assets/styles/style.css'
-import AppRouter from './routes/AppRouter'
+import React, { Component } from "react";
+import "./assets/styles/style.css";
+import AppRouter from "./routes/AppRouter";
 
-const App = () => {
-    return <AppRouter />
+class App extends Component {
+    render() {
+        return <AppRouter />;
+    }
 }
- 
-export default App
+
+export default App;
