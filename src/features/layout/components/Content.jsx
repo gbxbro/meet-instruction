@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import instructions from '../../../config/instructions.json';
 
+// eslint-disable-next-line valid-jsdoc
 /**
  * Class for layout's Content component.
  *
@@ -20,10 +21,11 @@ class Content extends Component<Props> {
 
         this._fetchContent = this._fetchContent.bind(this);
         this._parseContent = this._parseContent.bind(this);
+        this._getItem = this._getItem.bind(this);
+        this._getItems = this._getItems.bind(this);
 
         this.state = {
-            pages: [],
-            currentParsedItem: null
+            pages: []
         };
     }
 
@@ -48,14 +50,15 @@ class Content extends Component<Props> {
     /**
      * Init content function.
      *
-     * @param {Array} items - GG.
      * @param {Object} item - GG.
      * @returns {Object} - Mm.
      */
-    _parseContent(items, item) {
+    _parseContent = async item => {
+        const items = item.items || [];
+
         if (items.length) {
 
-            const newItems = items.map(i => this._parseContent(i.items, i));
+            const newItems = await this._getItems(items);
 
             return {
                 ...item,
@@ -63,21 +66,25 @@ class Content extends Component<Props> {
             };
         }
 
-        this._fetchContent(item.items)
-            .then(result => {
-                this.setState(prev => {
-                    return {
-                        ...prev,
-                        temp: result
-                    };
-                });
-            });
+        const fetchedContent = await this._fetchContent(item.content);
 
         return {
             ...item,
-            content: this.state.temp
+            content: fetchedContent
         };
-    }
+    };
+
+    _getItem = async item => {
+        const newItem = await this._parseContent(item);
+
+        return newItem;
+    };
+
+    _getItems = async items => {
+        const newItems = await Promise.all(items.map(this._getItem));
+
+        return newItems;
+    };
 
     /**
      * Sets keyboard shortcuts for to trigger ToolbarButtons actions.
@@ -86,9 +93,11 @@ class Content extends Component<Props> {
      * @returns {void}
      */
     componentDidMount() {
-        const res = instructions.map(item => this._parseContent(item.items, item));
+        this._getItems(instructions)
+            .then(res => console.log('xx', res));
 
-        console.log('rezzzz', res);
+        // this._getItems(instructions)
+        // .then(result => console.log('RESULT', result));
     }
 
     /**
