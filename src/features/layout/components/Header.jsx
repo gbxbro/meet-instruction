@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { toggleSidebar } from '../reducer';
 
 import Logo from './Logo';
-import Sidebar from './Sidebar';
+import Sidebar from './sidebar/Sidebar';
 
 type Props = {
 

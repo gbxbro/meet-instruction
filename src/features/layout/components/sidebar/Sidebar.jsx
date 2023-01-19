@@ -3,8 +3,8 @@ import { Box, Divider, Drawer, IconButton, List } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import instructions from '../../../config/instructions.json';
-import { toggleSidebar } from '../reducer';
+import instructions from '../../../../config/instructions.json';
+import { toggleSidebar } from '../../reducer';
 
 import ListItem from './ListItem';
 
@@ -77,7 +77,7 @@ class Sidebar extends Component<Props> {
 
                                 return (
                                     <ListItem
-                                        content = { item?.items || [] }
+                                        content = { item?.items }
                                         id = { currentId }
                                         key = { index }
                                         title = { `${currentId}. ${item?.title}` } />

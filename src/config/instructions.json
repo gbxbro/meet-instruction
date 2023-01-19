@@ -1,31 +1,33 @@
 [
     {
         "title": "Технические требования",
+        "content": "static/instructions/1/page.html",
         "items": []
     },
     {
         "title": "Вход в конференцию",
+        "content": "static/instructions/2/page.html",
         "items": [
             {
                 "title": "Первый вход в конференцию",
+                "content": "static/instructions/2/1/page.html",
                 "items": []
             },
             {
                 "title": "Пароль на конференцию",
+                "content": "static/instructions/2/2/page.html",
                 "items": []
             },
             {
                 "title": "Режим ожидания",
+                "content": "static/instructions/2/3/page.html",
                 "items": []
             }
         ]
     },
     {
         "title": "Комнаты",
-        "items": []
-    }, 
-    {
-        "title": "Элементы управления",
+        "content": "static/instructions/3/page.html",
         "items": []
     }
 ]
