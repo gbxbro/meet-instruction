@@ -67,6 +67,7 @@ body,
     }
 
     .footer {
+        width: calc(100vw - $drawer-width);
         margin-left: $drawer-width;
         transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
     }

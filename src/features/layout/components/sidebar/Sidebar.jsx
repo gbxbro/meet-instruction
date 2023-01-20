@@ -3,7 +3,6 @@ import { Box, Divider, Drawer, IconButton, List } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import instructions from '../../../../config/instructions.json';
 import { toggleSidebar } from '../../reducer';
 
 import ListItem from './ListItem';
@@ -14,6 +13,11 @@ type Props = {
      * Defines is sidebar is open.
      */
     _isShowSidebar: boolean,
+
+    /**
+     * Instruction.
+     */
+    instruction: Array<Object>,
 
     /**
      * The redux {@code dispatch} function.
@@ -54,9 +58,7 @@ class Sidebar extends Component<Props> {
      * @inheritdoc
      */
     render() {
-        const { _isShowSidebar } = this.props;
-
-        // console.log(instructions);
+        const { _isShowSidebar, instruction } = this.props;
 
         return (
             <div className = 'sidebar'>
@@ -72,7 +74,9 @@ class Sidebar extends Component<Props> {
                     <Divider />
                     <div className = 'sidebar__list'>
                         <List>
-                            {instructions.map((item, index) => {
+                            {Array.isArray(instruction)
+                            && instruction.length > 0
+                            && instruction.map((item, index) => {
                                 const currentId = index + 1;
 
                                 return (

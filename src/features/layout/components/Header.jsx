@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { toggleSidebar } from '../reducer';
 
 import Logo from './Logo';
-import Sidebar from './sidebar/Sidebar';
 
 type Props = {
 
@@ -81,13 +80,14 @@ class Header extends Component<Props> {
                             component = 'div'
                             noWrap = { true }
                             sx = {{ flexGrow: 1,
-                                ml: 2 }}
+                                ml: 2,
+                                fontFamily: 'Manrope, Roboto'
+                            }}
                             variant = 'h6'>
-                            Help
+                            Instructions
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Sidebar />
             </div>
         );
     }

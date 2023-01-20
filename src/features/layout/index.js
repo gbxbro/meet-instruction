@@ -1,2 +1,2 @@
 export * from './components';
-export { default as Layout } from './Layout';
+export { default as Layout } from './components/Layout';

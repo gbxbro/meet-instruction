@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isShowSidebar: true,
-    itemId: null
+    itemId: null,
+    itemContent: null
 };
 
 const layoutSlice = createSlice({
@@ -14,9 +15,12 @@ const layoutSlice = createSlice({
         },
         setItemId: (state, action) => {
             state.itemId = action.payload;
+        },
+        setitemContent: (state, action) => {
+            state.itemContent = action.payload;
         }
     }
 });
 
-export const { toggleSidebar, setItemId } = layoutSlice.actions;
+export const { toggleSidebar, setItemId, setitemContent } = layoutSlice.actions;
 export default layoutSlice.reducer;
