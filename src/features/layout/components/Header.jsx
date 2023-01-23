@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 
 import { toggleSidebar } from '../reducer';
 
-import Logo from './Logo';
-
 type Props = {
 
     /**
@@ -60,9 +58,8 @@ class Header extends Component<Props> {
             <div className = 'header'>
                 <AppBar
                     color = 'inherit'
-
                     open = { _isShowSidebar }
-                    position = 'fixed'>
+                    position = 'static'>
                     <Toolbar>
                         <IconButton
                             aria-label = 'open drawer'
@@ -75,7 +72,6 @@ class Header extends Component<Props> {
                             }}>
                             <MenuIcon />
                         </IconButton>
-                        <Logo />
                         <Typography
                             component = 'div'
                             noWrap = { true }

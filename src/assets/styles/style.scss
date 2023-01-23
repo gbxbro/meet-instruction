@@ -23,9 +23,18 @@ body,
 
 .app {
     overflow-x: hidden;
+    width: 100%;
     height: 100%;
     display: flex;
-    flex-direction: column;
+
+    .sidebar {
+
+    }
+
+    // .app__inner
+    &__inner {
+        width: 100%;
+    }
 
     & .header {
         flex: 0 0 auto;
@@ -40,37 +49,25 @@ body,
     }
 }
 
-// MATERIAL UI STYLES
-
-// Drawer
-.MuiDrawer-root {
-    width: $drawer-width;
-
-    & .MuiDrawer-paper {
-        width: $drawer-width;
-    }
-}
-
 // CUSTOM STYLES
 .app_indent {
+    // .header {
+    //     & .MuiAppBar-root {
+    //         left: $drawer-width;
+    //         transition: left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    //     }
+    // }
 
-    .header {
-        & .MuiAppBar-root {
-            left: $drawer-width;
-            transition: left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-        }
-    }
+    // .main {
+    //     margin-left: $drawer-width;
+    //     transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    // }
 
-    .main {
-        margin-left: $drawer-width;
-        transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    }
-
-    .footer {
-        width: calc(100vw - $drawer-width);
-        margin-left: $drawer-width;
-        transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    }
+    // .footer {
+    //     width: calc(100vw - $drawer-width);
+    //     margin-left: $drawer-width;
+    //     transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    // }
 }
 
 .header {
@@ -90,28 +87,38 @@ body,
 }
 
 .sidebar {
+    width: 0;
+    height: 100%;
+    transition: width 1700ms linear;
+
+    // .sidebar_open
+    &_open {
+        width: min-content;
+    }
+
     // .sidebar__link
     &__link {
         text-decoration: none;
         color: inherit;
     }
 
+    // .sidebar__logo
+    &__logo {
+        width: 130px;
+        padding-top: 5px;
+    }
+
     // .sidebar__header
     &__header {
         display: flex;
         padding: 0 15px;
-        justify-content: end;
+        justify-content: space-between;
         align-items: center;
-        position: fixed;
-        left: 0;
-        top: 0;
-        z-index: 2000;
+        gap: 10px;
         height: $header-height;
-        width: $drawer-width;
+        width: 100%;
         background-color: white;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        border-right: 1px solid rgba(0, 0, 0, 0.12);
-        
+
         @include breakpoint($xsm-bp) {
             height: $header-height-sm;
         }
@@ -119,13 +126,41 @@ body,
 
     // .sidebar__list
     &__list {
-        margin-top: $header-height;
         padding: 10px 0;
+    }
+
+    // MUI
+    .MuiDrawer-root {
+        width: inherit;
+        height: inherit;
+
+        & .MuiDrawer-paper {
+            position: static;
+            width: inherit;
+            height: inherit;
+            // visibility: visible !important;
+            // transform: none !important;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .MuiTypography-root {
+            white-space: nowrap;
+        }
+
+        .MuiListItemText-inset {
+            padding-left: 20px;
+        }
     }
 }
 
 .footer {
     padding: 25px 0;
+
+    // .footer__logo
+    &__logo {
+        width: 130px;
+    }
 
     // .footer__container
     &__container {
@@ -162,13 +197,6 @@ body,
                 width: 100%;
                 height: 100%;
             }
-        }
-
-        // .footer__link_logo
-        &_logo {
-            display: inline-block;
-            width: fit-content;
-            height: fit-content;
         }
     }
 

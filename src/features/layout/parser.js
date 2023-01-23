@@ -27,6 +27,7 @@ class Parser {
      */
     static _parseContent = async item => {
         const items = item.items || [];
+        const fetchedContent = await fetchContent(item.content);
 
         if (items.length) {
 
@@ -34,11 +35,10 @@ class Parser {
 
             return {
                 ...item,
+                content: fetchedContent,
                 items: newItems
             };
         }
-
-        const fetchedContent = await fetchContent(item.content);
 
         return {
             ...item,

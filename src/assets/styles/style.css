@@ -19,9 +19,12 @@ body,
 
 .app {
   overflow-x: hidden;
+  width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
+}
+.app__inner {
+  width: 100%;
 }
 .app .header {
   flex: 0 0 auto;
@@ -31,27 +34,6 @@ body,
 }
 .app .footer {
   flex: 0 0 auto;
-}
-
-.MuiDrawer-root {
-  width: 240px;
-}
-.MuiDrawer-root .MuiDrawer-paper {
-  width: 240px;
-}
-
-.app_indent .header .MuiAppBar-root {
-  left: 240px;
-  transition: left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-}
-.app_indent .main {
-  margin-left: 240px;
-  transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-}
-.app_indent .footer {
-  width: calc(100vw - 240px);
-  margin-left: 240px;
-  transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 }
 
 .header {
@@ -71,24 +53,33 @@ body,
   padding: 15px;
 }
 
+.sidebar {
+  width: 0;
+  height: 100%;
+  transition: width 1700ms linear;
+}
+.sidebar_open {
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+}
 .sidebar__link {
   text-decoration: none;
   color: inherit;
 }
+.sidebar__logo {
+  width: 130px;
+  padding-top: 5px;
+}
 .sidebar__header {
   display: flex;
   padding: 0 15px;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 2000;
+  gap: 10px;
   height: 64px;
-  width: 240px;
+  width: 100%;
   background-color: white;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 @media screen and (max-width: 600px) {
   .sidebar__header {
@@ -96,12 +87,31 @@ body,
   }
 }
 .sidebar__list {
-  margin-top: 64px;
   padding: 10px 0;
+}
+.sidebar .MuiDrawer-root {
+  width: inherit;
+  height: inherit;
+}
+.sidebar .MuiDrawer-root .MuiDrawer-paper {
+  position: static;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar .MuiDrawer-root .MuiTypography-root {
+  white-space: nowrap;
+}
+.sidebar .MuiDrawer-root .MuiListItemText-inset {
+  padding-left: 20px;
 }
 
 .footer {
   padding: 25px 0;
+}
+.footer__logo {
+  width: 130px;
 }
 .footer__container {
   display: flex !important;
@@ -132,15 +142,6 @@ body,
 .footer__link_app img {
   width: 100%;
   height: 100%;
-}
-.footer__link_logo {
-  display: inline-block;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
 }
 .footer__inner {
   display: flex;

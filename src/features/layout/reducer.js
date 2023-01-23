@@ -1,9 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+type InitialState = {
+
+    /**
+     * Defines is sidebar is open.
+     */
+    isShowSidebar: boolean,
+
+    /**
+     * An array containing keys to identify the final active element.
+     */
+    sidebarActiveItem: Array<number>,
+
+    /**
+     * Content of active element.
+     */
+    sidebarActiveItemContent: string
+}
+
+const initialState: InitialState = {
     isShowSidebar: true,
-    itemId: null,
-    itemContent: null
+    sidebarActiveItem: [],
+    sidebarActiveItemContent: null
 };
 
 const layoutSlice = createSlice({
@@ -13,14 +31,14 @@ const layoutSlice = createSlice({
         toggleSidebar: state => {
             state.isShowSidebar = !state.isShowSidebar;
         },
-        setItemId: (state, action) => {
-            state.itemId = action.payload;
+        setSidebarActiveItem: (state, action) => {
+            state.sidebarActiveItem = action.payload;
         },
-        setitemContent: (state, action) => {
-            state.itemContent = action.payload;
+        setSidebarActiveItemContent: (state, action) => {
+            state.sidebarActiveItemContent = action.payload;
         }
     }
 });
 
-export const { toggleSidebar, setItemId, setitemContent } = layoutSlice.actions;
+export const { toggleSidebar, setSidebarActiveItem, setitemContent, setSidebarActiveItemContent } = layoutSlice.actions;
 export default layoutSlice.reducer;

@@ -1,13 +1,23 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, List, ListItemButton, ListItemText } from '@mui/material';
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setItemId } from '../../reducer';
+import { setSidebarActiveItem, setSidebarActiveItemContent } from '../../reducer';
 
 // import SidebarList from './SidebarList';
 
 type Props = {
+
+    /**
+     * Content of item.
+     */
+    content: string,
+
+    /**
+     * Defines is item is inset.
+     */
+    isInset: boolean,
 
     /**
      * Defines is SidebarItem is active.
@@ -17,12 +27,12 @@ type Props = {
     /**
      * Defines is SidebarItem is active.
      */
-    id: string,
+    ids: Array,
 
     /**
      * Defines is SidebarItem is expanded.
      */
-    content: Array<Object> | never,
+    items: Array<Object> | never,
 };
 
 /**
@@ -30,9 +40,11 @@ type Props = {
  *
  * @returns {Object}
  */
-const ListItem = ({ id, title, content = [] }: Props) => {
+const ListItem = ({ content, isInset = false, ids = [], title, items = [] }: Props) => {
     const dispatch = useDispatch();
+    const { sidebarActiveItem } = useSelector(state => state.layout);
     const [ isExpanded, setIsExpanded ] = useState(false);
+    const [ isActive, setIsActive ] = useState(false);
 
     /**
      * Item click handler.
@@ -40,8 +52,9 @@ const ListItem = ({ id, title, content = [] }: Props) => {
      * @returns {void}
      */
     const _onClickItem = useCallback(() => {
-        dispatch(setItemId(id));
-    }, [ id ]);
+        dispatch(setSidebarActiveItem(ids));
+        dispatch(setSidebarActiveItemContent(content));
+    }, [ ids, content ]);
 
     /**
      * Expandable item click handler.
@@ -49,45 +62,64 @@ const ListItem = ({ id, title, content = [] }: Props) => {
      * @returns {void}
      */
     const _onClickExpandedItem = useCallback(() => {
-        setIsExpanded(prev => !prev);
-        _onClickItem();
-    }, [ _onClickItem ]);
+        if (!isActive && isExpanded) {
+            setIsExpanded(true);
+        } else {
+            setIsExpanded(prev => !prev);
+        }
 
-    if (content?.length) {
+        _onClickItem();
+    }, [ _onClickItem, isExpanded, isActive ]);
+
+    /**
+     * Defines is item is active.
+     */
+    useEffect(() => setIsActive(JSON.stringify(sidebarActiveItem) === JSON.stringify(ids)), [ ids, sidebarActiveItem ]);
+
+    if (items?.length) {
         return (
-            <>
-                <ListItemButton onClick = { _onClickExpandedItem }>
+            <div className = 'list-item'>
+                <ListItemButton
+                    onClick = { _onClickExpandedItem }
+                    selected = { isActive }>
                     <ListItemText primary = { title } />
-                    {isExpanded ? <ExpandLess /> : <ExpandMore />}
+                    {isExpanded
+                        ? <ExpandLess />
+                        : <ExpandMore />
+                    }
                 </ListItemButton>
                 <Collapse
                     in = { isExpanded }
                     timeout = 'auto'
                     unmountOnExit = { true }>
-                    <List sx = {{ pl: 2 }}>
-                        {content.map((item, index) => {
-                            const newId = `${id}.${index + 1}.`;
+                    <List sx = {{ width: '100%' }}>
+                        {items.map((item, index) => {
+                            const newIds = [ ...ids, index ];
 
                             // recursion render of React element
                             return (
                                 <ListItem
-                                    content = { item?.items }
-                                    id = { newId }
-                                    key = { newId }
-                                    title = { `${newId} ${item?.title}` } />
+                                    content = { item.content }
+                                    ids = { newIds }
+                                    isInset = { true }
+                                    items = { item?.items }
+                                    key = { newIds[newIds.length - 1] }
+                                    title = { `${newIds.map(i => i + 1).join('.')} ${item?.title}` } />
                             );
                         })}
                     </List>
                 </Collapse>
-            </>
-
+            </div>
         );
-
     }
 
     return (
-        <ListItemButton onClick = { _onClickItem }>
-            <ListItemText primary = { title } />
+        <ListItemButton
+            onClick = { _onClickItem }
+            selected = { isActive }>
+            <ListItemText
+                inset = { isInset }
+                primary = { title } />
         </ListItemButton>
     );
 };

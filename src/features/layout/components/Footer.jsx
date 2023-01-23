@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import React, { Component } from 'react';
 
-import { ReactComponent as LogoIcon } from '../../../assets/images/icons/logo.svg';
+import { Logo } from './';
 
 type Props = {
     isShowDrawer: Boolean,
@@ -25,11 +25,9 @@ class Footer extends Component<Props> {
             <footer className = { `footer ${isShowDrawer ? 'footer_indent' : ''}` }>
                 <Container className = 'footer__container'>
                     <div className = 'footer__inner'>
-                        <a
-                            className = 'footer__link footer__link_logo'
-                            href = '/'>
-                            <LogoIcon className = 'footer__icon footer__icon_logo' />
-                        </a>
+                        <Logo
+                            className = 'footer__logo'
+                            label = { true } />
                         <div className = 'footer__copyright'>
                             <span>© 2021 – 2023 ООО “Центр”</span>
                             <span>Все права защищены</span>

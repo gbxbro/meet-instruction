@@ -1,14 +1,28 @@
 import { Container } from '@mui/material';
 import React, { Component } from 'react';
-
-import { parseInstruction } from '../functions';
+import { connect } from 'react-redux';
 
 type Props = {
 
     /**
-     * Instruction.
+     * Instruction from parsed JSON.
      */
     instruction: Array<Object>,
+
+    /**
+     * Sidebar active element's ID.
+     */
+    _sidebarActiveItem: string,
+
+    /**
+     * Sidebar active element's content.
+     */
+    _sidebarActiveItemContent: string,
+
+    /**
+     * The redux {@code dispatch} function.
+     */
+    dispatch: Function
 }
 
 /**
@@ -17,35 +31,6 @@ type Props = {
  * @abstract
  */
 class Content extends Component<Props> {
-    /**
-     * Initializes a new {@code Sidebar} instance.
-     *
-     * @param {Props} props - The read-only React {@code Component} props with
-     * which the new instance is to be initialized.
-     */
-    constructor(props: Props) {
-        super(props);
-
-        this.state = {
-            pages: []
-        };
-    }
-
-    /**
-     * Sets keyboard shortcuts for to trigger ToolbarButtons actions.
-     *
-     * @inheritdoc
-     * @returns {void}
-     */
-    componentDidMount() {
-        const { instruction } = this.props;
-
-        parseInstruction(instruction)
-            .then(res => console.log('xx', res));
-
-        // this._getItems(instructions)
-        // .then(result => console.log('RESULT', result));
-    }
 
     /**
      * Implements React's {@link Component#render}.
@@ -53,12 +38,34 @@ class Content extends Component<Props> {
      * @inheritdoc
      */
     render() {
+        const { _sidebarActiveItemContent } = this.props;
+
         return (
-            <Container>
-                Content
-            </Container>
+            <section className = 'content'>
+                <Container>
+                    <div
+                        className = 'content__item'
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML = {{ __html: _sidebarActiveItemContent }} />
+                </Container>
+            </section>
         );
     }
 }
 
-export default Content;
+/**
+ * Function that maps parts of Redux state tree into component props.
+ *
+ * @param {Object} state - Redux state.
+ * @returns {Object}
+ */
+function mapStateToProps(state) {
+    const { sidebarActiveItem, sidebarActiveItemContent } = state.layout;
+
+    return {
+        _sidebarActiveItem: sidebarActiveItem,
+        _sidebarActiveItemContent: sidebarActiveItemContent
+    };
+}
+
+export default connect(mapStateToProps)(Content);

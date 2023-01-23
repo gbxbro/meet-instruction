@@ -3,9 +3,9 @@ import { Box, Divider, Drawer, IconButton, List } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { ListItem, Logo } from '../';
 import { toggleSidebar } from '../../reducer';
 
-import ListItem from './ListItem';
 
 type Props = {
 
@@ -15,7 +15,7 @@ type Props = {
     _isShowSidebar: boolean,
 
     /**
-     * Instruction.
+     * Instruction from JSON.
      */
     instruction: Array<Object>,
 
@@ -61,12 +61,16 @@ class Sidebar extends Component<Props> {
         const { _isShowSidebar, instruction } = this.props;
 
         return (
-            <div className = 'sidebar'>
+            <div className = { `sidebar${_isShowSidebar ? ' sidebar_open' : ''}` }>
                 <Drawer
                     anchor = 'left'
                     open = { _isShowSidebar }
+                    transitionDuration = {{ appear: 225,
+                        enter: 225,
+                        exit: 225 }}
                     variant = 'persistent'>
                     <Box className = 'sidebar__header'>
+                        <Logo className = 'sidebar__logo' />
                         <IconButton onClick = { this._onToggleSidebar }>
                             <ChevronLeftIcon />
                         </IconButton>
@@ -76,20 +80,16 @@ class Sidebar extends Component<Props> {
                         <List>
                             {Array.isArray(instruction)
                             && instruction.length > 0
-                            && instruction.map((item, index) => {
-                                const currentId = index + 1;
-
-                                return (
-                                    <ListItem
-                                        content = { item?.items }
-                                        id = { currentId }
-                                        key = { index }
-                                        title = { `${currentId}. ${item?.title}` } />
-                                );
-                            })}
+                            && instruction.map((item, index) => (
+                                <ListItem
+                                    content = { item.content }
+                                    ids = { [ index ] }
+                                    items = { item?.items }
+                                    key = { index }
+                                    title = { `${index + 1}. ${item?.title}` } />
+                            ))}
                         </List>
                     </div>
-                    <Divider />
                 </Drawer>
             </div>
         );

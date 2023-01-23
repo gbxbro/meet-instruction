@@ -1,10 +1,15 @@
+import { Box } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Content, Footer, Header, Sidebar } from '..';
-import { fetchInstruction } from '../functions';
+import { Content, Footer, Header, Sidebar } from '../';
+import { fetchInstruction, parseInstruction } from '../functions';
 
 type Props = {
+
+    /**
+     * Defines is sidebar is open.
+     */
     _isShowSidebar: boolean
 }
 
@@ -28,12 +33,52 @@ class Layout extends Component<Props> {
                 isLoaded: false,
                 error: null,
                 items: []
+            },
+            parsedInstruction: {
+                isLoaded: false,
+                error: null,
+                items: []
             }
         };
     }
 
     /**
-     * Sets keyboard shortcuts for to trigger ToolbarButtons actions.
+     * Sets local state (parsedInstruction) after parsing JSON instruction.
+     *
+     * @inheritdoc
+     * @returns {void}
+     */
+    componentDidUpdate(prevProps, prevState) {
+        const { instruction } = this.state;
+        const { parsedInstruction } = prevState;
+
+        if (!parsedInstruction.items.length && instruction.items.length) {
+            parseInstruction(instruction.items)
+                .then(result => this.setState(prev => {
+                    return {
+                        ...prev,
+                        parsedInstruction: {
+                            ...prev.parsedInstruction,
+                            isLoaded: true,
+                            items: result
+                        }
+                    };
+                }))
+                .catch(error => this.setState(prev => {
+                    return {
+                        ...prev,
+                        parsedInstruction: {
+                            ...prev.parsedInstruction,
+                            isLoaded: true,
+                            error
+                        }
+                    };
+                }));
+        }
+    }
+
+    /**
+     * Sets local state (instruction) after fetching JSON instruction.
      *
      * @inheritdoc
      * @returns {void}
@@ -69,16 +114,18 @@ class Layout extends Component<Props> {
      */
     render() {
         const { _isShowSidebar } = this.props;
-        const { instruction } = this.state;
+        const { parsedInstruction } = this.state;
 
         return (
             <div className = { `app${_isShowSidebar ? ' app_indent' : ''}` }>
-                <Header />
-                <Sidebar instruction = { instruction.items } />
-                <main className = 'main'>
-                    <Content instruction = { instruction.items } />
-                </main>
-                <Footer />
+                <Sidebar instruction = { parsedInstruction.items } />
+                <Box className = 'app__inner'>
+                    <Header />
+                    <main className = 'main'>
+                        <Content instruction = { parsedInstruction.items } />
+                    </main>
+                    <Footer />
+                </Box>
             </div>
         );
     }
@@ -92,10 +139,11 @@ class Layout extends Component<Props> {
  * @returns {Object}
  */
 function mapStateToProps(state) {
-    const { isShowSidebar } = state.layout;
+    const { isShowSidebar, sidebarActiveItem } = state.layout;
 
     return {
-        _isShowSidebar: isShowSidebar
+        _isShowSidebar: isShowSidebar,
+        _sidebarActiveItem: sidebarActiveItem
     };
 }
 
