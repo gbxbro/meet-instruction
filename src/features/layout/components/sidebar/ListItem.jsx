@@ -1,6 +1,6 @@
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, List, ListItemButton, ListItemText } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { setSidebarActiveItem, setSidebarActiveItemContent } from '../../reducer';
@@ -8,11 +8,6 @@ import { setSidebarActiveItem, setSidebarActiveItemContent } from '../../reducer
 // import SidebarList from './SidebarList';
 
 type Props = {
-
-    /**
-     * Content of item.
-     */
-    content: string,
 
     /**
      * Defines is item is inset.
@@ -25,14 +20,14 @@ type Props = {
     title: boolean,
 
     /**
-     * Defines is SidebarItem is active.
+     * Defines is SidebarItem is expanded.
      */
-    ids: Array,
+    parent: object,
 
     /**
      * Defines is SidebarItem is expanded.
      */
-    items: Array<Object> | never,
+    item: object,
 };
 
 /**
@@ -40,11 +35,19 @@ type Props = {
  *
  * @returns {Object}
  */
-const ListItem = ({ content, isInset = false, ids = [], title, items = [] }: Props) => {
+const ListItem = ({
+    isInset = false,
+    title,
+    item
+}: Props) => {
     const dispatch = useDispatch();
     const { sidebarActiveItem } = useSelector(state => state.layout);
+
     const [ isExpanded, setIsExpanded ] = useState(false);
     const [ isActive, setIsActive ] = useState(false);
+
+    const items = useMemo(() => item?.items || [], [ item?.items ]);
+    const id = useMemo(() => item?.id || [], [ item?.id ]);
 
     /**
      * Item click handler.
@@ -52,9 +55,9 @@ const ListItem = ({ content, isInset = false, ids = [], title, items = [] }: Pro
      * @returns {void}
      */
     const _onClickItem = useCallback(() => {
-        dispatch(setSidebarActiveItem(ids));
-        dispatch(setSidebarActiveItemContent(content));
-    }, [ ids, content ]);
+        dispatch(setSidebarActiveItem(id));
+        dispatch(setSidebarActiveItemContent(isInset ? item?.parentItem : item));
+    }, [ id, isInset, item ]);
 
     /**
      * Expandable item click handler.
@@ -74,7 +77,7 @@ const ListItem = ({ content, isInset = false, ids = [], title, items = [] }: Pro
     /**
      * Defines is item is active.
      */
-    useEffect(() => setIsActive(JSON.stringify(sidebarActiveItem) === JSON.stringify(ids)), [ ids, sidebarActiveItem ]);
+    useEffect(() => setIsActive(JSON.stringify(sidebarActiveItem) === JSON.stringify(id)), [ id, sidebarActiveItem ]);
 
     if (items?.length) {
         return (
@@ -82,7 +85,9 @@ const ListItem = ({ content, isInset = false, ids = [], title, items = [] }: Pro
                 <ListItemButton
                     onClick = { _onClickExpandedItem }
                     selected = { isActive }>
-                    <ListItemText primary = { title } />
+                    <ListItemText
+                        inset = { isInset }
+                        primary = { title } />
                     {isExpanded
                         ? <ExpandLess />
                         : <ExpandMore />
@@ -93,18 +98,16 @@ const ListItem = ({ content, isInset = false, ids = [], title, items = [] }: Pro
                     timeout = 'auto'
                     unmountOnExit = { true }>
                     <List sx = {{ width: '100%' }}>
-                        {items.map((item, index) => {
-                            const newIds = [ ...ids, index ];
+                        {items.map(innerItem => {
+                            const innerId = innerItem?.id || [];
 
                             // recursion render of React element
                             return (
                                 <ListItem
-                                    content = { item.content }
-                                    ids = { newIds }
                                     isInset = { true }
-                                    items = { item?.items }
-                                    key = { newIds[newIds.length - 1] }
-                                    title = { `${newIds.map(i => i + 1).join('.')} ${item?.title}` } />
+                                    item = { innerItem }
+                                    key = { innerId.map(i => i + 1).join('.') }
+                                    title = { `${innerId.map(i => i + 1).join('.')}. ${innerItem?.title}` } />
                             );
                         })}
                     </List>
@@ -114,13 +117,16 @@ const ListItem = ({ content, isInset = false, ids = [], title, items = [] }: Pro
     }
 
     return (
-        <ListItemButton
-            onClick = { _onClickItem }
-            selected = { isActive }>
-            <ListItemText
-                inset = { isInset }
-                primary = { title } />
-        </ListItemButton>
+        <div className = 'list-item'>
+            <ListItemButton
+                onClick = { _onClickItem }
+                selected = { isActive }>
+                <ListItemText
+                    inset = { isInset }
+                    primary = { title } />
+            </ListItemButton>
+        </div>
+
     );
 };
 

@@ -80,14 +80,16 @@ class Sidebar extends Component<Props> {
                         <List>
                             {Array.isArray(instruction)
                             && instruction.length > 0
-                            && instruction.map((item, index) => (
-                                <ListItem
-                                    content = { item.content }
-                                    ids = { [ index ] }
-                                    items = { item?.items }
-                                    key = { index }
-                                    title = { `${index + 1}. ${item?.title}` } />
-                            ))}
+                            && instruction.map(item => {
+                                const id = item?.id || [];
+
+                                return (
+                                    <ListItem
+                                        item = { item }
+                                        key = { id.map(i => i + 1).join('.') }
+                                        title = { `${id.map(i => i + 1).join('.')}. ${item?.title}` } />
+                                );
+                            })}
                         </List>
                     </div>
                 </Drawer>

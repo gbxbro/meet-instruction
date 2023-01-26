@@ -33,53 +33,48 @@ body,
 
     // .app__inner
     &__inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
         width: 100%;
+        height: 100%;
+
+        & .header {
+            flex: 0 0 auto;
+        }
+    
+        & .main {
+            flex: 1 0 auto;
+        }
+    
+        & .footer {
+            flex: 0 0 auto;
+        }
     }
 
-    & .header {
-        flex: 0 0 auto;
+    // .app__content
+    &__content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        margin-top: $header-height;
+        overflow-y: auto;
+
+        @include breakpoint($xsm-bp) {
+            padding-top: $header-height-sm;
+        }
     }
-
-    & .main {
-        flex: 1 0 auto;
-    }
-
-    & .footer {
-        flex: 0 0 auto;
-    }
-}
-
-// CUSTOM STYLES
-.app_indent {
-    // .header {
-    //     & .MuiAppBar-root {
-    //         left: $drawer-width;
-    //         transition: left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    //     }
-    // }
-
-    // .main {
-    //     margin-left: $drawer-width;
-    //     transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    // }
-
-    // .footer {
-    //     width: calc(100vw - $drawer-width);
-    //     margin-left: $drawer-width;
-    //     transition: margin-left 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-    // }
 }
 
 .header {
-    position: relative;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .main {
-    margin-top: $header-height;
-
-    @include breakpoint($xsm-bp) {
-        margin-top: $header-height-sm;
-    }
+    padding: 15px 0;
 }
 
 .home {
@@ -93,7 +88,7 @@ body,
 
     // .sidebar_open
     &_open {
-        width: min-content;
+        width: max-content;
     }
 
     // .sidebar__link
@@ -133,23 +128,39 @@ body,
     .MuiDrawer-root {
         width: inherit;
         height: inherit;
+        transition: width 1700ms linear;
 
         & .MuiDrawer-paper {
+            transition: width 1700ms linear;
             position: static;
             width: inherit;
             height: inherit;
-            // visibility: visible !important;
-            // transform: none !important;
             display: flex;
             flex-direction: column;
         }
 
         .MuiTypography-root {
+            font-family: "Manrope", sans-serif;
             white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(black, 0.8);
         }
 
         .MuiListItemText-inset {
             padding-left: 20px;
+        }
+
+        .Mui-selected {
+            background-color: rgba($sidebar-active-button, 0.4);
+
+            .MuiTypography-root {
+                font-weight: 700;
+            }
+
+            &:hover {
+                background-color: rgba($sidebar-active-button, 0.4);
+            }
         }
     }
 }
@@ -229,5 +240,13 @@ body,
     &__apps {
         display: flex;
         gap: 5px;
+    }
+}
+
+.logo {
+
+    // .logo__link
+    &__link {
+        display: block;
     }
 }

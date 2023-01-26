@@ -1,4 +1,4 @@
-import config from '../../config/layout';
+import config from '../../config/pathNames';
 
 import Parser from './parser';
 
@@ -43,6 +43,15 @@ const fetchInstruction = async () => {
  * @param {Array<Object>} items - Items from JSON file.
  * @returns {Array<Object>}
  */
-const parseInstruction = async items => await Parser._getItems(items);
+const parseInstruction = async items => {
+    const itemsWithContent = await Parser._getItems(items);
+    const itemsWithParent = await Parser._getItemsWithParent(itemsWithContent);
+    const paginationItems = await Parser._getPaginationItems(itemsWithParent);
+
+    return {
+        items: itemsWithParent,
+        pagination: paginationItems
+    };
+};
 
 export { fetchContent, fetchInstruction, parseInstruction };

@@ -24,29 +24,43 @@ body,
   display: flex;
 }
 .app__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
 }
-.app .header {
+.app__inner .header {
   flex: 0 0 auto;
 }
-.app .main {
+.app__inner .main {
   flex: 1 0 auto;
 }
-.app .footer {
+.app__inner .footer {
   flex: 0 0 auto;
+}
+.app__content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-top: 64px;
+  overflow-y: auto;
+}
+@media screen and (max-width: 600px) {
+  .app__content {
+    padding-top: 56px;
+  }
 }
 
 .header {
-  position: relative;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .main {
-  margin-top: 64px;
-}
-@media screen and (max-width: 600px) {
-  .main {
-    margin-top: 56px;
-  }
+  padding: 15px 0;
 }
 
 .home {
@@ -59,9 +73,9 @@ body,
   transition: width 1700ms linear;
 }
 .sidebar_open {
-  width: -webkit-min-content;
-  width: -moz-min-content;
-  width: min-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 .sidebar__link {
   text-decoration: none;
@@ -92,8 +106,10 @@ body,
 .sidebar .MuiDrawer-root {
   width: inherit;
   height: inherit;
+  transition: width 1700ms linear;
 }
 .sidebar .MuiDrawer-root .MuiDrawer-paper {
+  transition: width 1700ms linear;
   position: static;
   width: inherit;
   height: inherit;
@@ -101,10 +117,23 @@ body,
   flex-direction: column;
 }
 .sidebar .MuiDrawer-root .MuiTypography-root {
+  font-family: "Manrope", sans-serif;
   white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
 }
 .sidebar .MuiDrawer-root .MuiListItemText-inset {
   padding-left: 20px;
+}
+.sidebar .MuiDrawer-root .Mui-selected {
+  background-color: rgba(22, 240, 116, 0.4);
+}
+.sidebar .MuiDrawer-root .Mui-selected .MuiTypography-root {
+  font-weight: 700;
+}
+.sidebar .MuiDrawer-root .Mui-selected:hover {
+  background-color: rgba(22, 240, 116, 0.4);
 }
 
 .footer {
@@ -166,4 +195,8 @@ body,
 .footer__apps {
   display: flex;
   gap: 5px;
+}
+
+.logo__link {
+  display: block;
 }/*# sourceMappingURL=style.css.map */

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Content, Footer, Header, Sidebar } from '../';
 import { fetchInstruction, parseInstruction } from '../functions';
 
+
 type Props = {
 
     /**
@@ -37,6 +38,7 @@ class Layout extends Component<Props> {
             parsedInstruction: {
                 isLoaded: false,
                 error: null,
+                pagination: [],
                 items: []
             }
         };
@@ -54,16 +56,19 @@ class Layout extends Component<Props> {
 
         if (!parsedInstruction.items.length && instruction.items.length) {
             parseInstruction(instruction.items)
-                .then(result => this.setState(prev => {
-                    return {
-                        ...prev,
-                        parsedInstruction: {
-                            ...prev.parsedInstruction,
-                            isLoaded: true,
-                            items: result
-                        }
-                    };
-                }))
+                .then(result => {
+                    this.setState(prev => {
+                        return {
+                            ...prev,
+                            parsedInstruction: {
+                                ...prev.parsedInstruction,
+                                isLoaded: true,
+                                pagination: result?.pagination,
+                                items: result?.items
+                            }
+                        };
+                    });
+                })
                 .catch(error => this.setState(prev => {
                     return {
                         ...prev,
@@ -121,10 +126,14 @@ class Layout extends Component<Props> {
                 <Sidebar instruction = { parsedInstruction.items } />
                 <Box className = 'app__inner'>
                     <Header />
-                    <main className = 'main'>
-                        <Content instruction = { parsedInstruction.items } />
-                    </main>
-                    <Footer />
+                    <Box
+                        className = 'app__content'
+                        id = 'app__content'>
+                        <main className = 'main'>
+                            <Content items = { parsedInstruction.pagination } />
+                        </main>
+                        <Footer />
+                    </Box>
                 </Box>
             </div>
         );

@@ -14,9 +14,25 @@
                 "items": []
             },
             {
-                "title": "Пароль на конференцию",
+                "title": "Пароль на конференцию MAIN",
                 "content": "static/instructions/2/2/page.html",
-                "items": []
+                "items": [
+                    {
+                        "title": "Пароль на конференцию 1",
+                        "content": "static/instructions/2/2/1/page.html",
+                        "items": []
+                    },
+                    {
+                        "title": "Пароль на конференцию 2",
+                        "content": "static/instructions/2/2/2/page.html",
+                        "items": []
+                    },
+                    {
+                        "title": "Пароль на конференцию 3",
+                        "content": "static/instructions/2/2/3/page.html",
+                        "items": []
+                    }
+                ]
             },
             {
                 "title": "Режим ожидания",

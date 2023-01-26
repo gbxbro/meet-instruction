@@ -80,7 +80,7 @@ class Header extends Component<Props> {
                                 fontFamily: 'Manrope, Roboto'
                             }}
                             variant = 'h6'>
-                            Instructions
+                            Руководство пользователя
                         </Typography>
                     </Toolbar>
                 </AppBar>
