@@ -16,8 +16,11 @@ class Parser {
      */
     static _getItems = async (items = [], index = []) => {
         const newItems = items?.length && await Promise.all(
-            items.map((innerItem, innerIndex) => this._getItem(
-                innerItem, index?.length ? [ ...index, innerIndex ] : [ innerIndex ]
+            items.map((innerItem, innerIndex) => this._parseContent(
+                innerItem,
+                index?.length
+                    ? [ ...index, innerIndex ]
+                    : [ innerIndex ]
             ))
         );
 
@@ -55,26 +58,28 @@ class Parser {
     };
 
     /**
-     * Get new item by promise.
+     * Get new array of items by promise.
      *
-     * @param {Object} item - Input item.
-     * @param {Array<number>} index - Index of item.
-     * @returns {Object} - Returns a new item after parse.
+     * @param {Array<Object>} items - Array of objects.
+     * @param {Object} parentItem - Array of numbers.
+     * @returns {Array<Object> | Array} - Returns a new array after getting all the elements from the promise.
      */
-    static _getItem = async (item, index) => {
-        const newItem = await this._parseContent(item, index);
-
-        return newItem;
-    };
-
     static _getItemsWithParent = async (items = [], parentItem) => {
         const newItems = items.length && await Promise.all(
-            items.map(item => this._getItemWithParent(item, parentItem ?? null))
+            items.map(item => this._parseParent(item, parentItem ?? null))
         );
 
         return newItems || [];
     };
 
+    /**
+     * Recursion parse and fetching content.
+     *
+     * @param {Object} item - Input element for parsing.
+     * @param {Object} parentItem - Index for the parsed item.
+     * @returns {Object} - Returns new item object,
+     * with the path in the property(content) replaced to html markup after fetching.
+     */
     static _parseParent = async (item, parentItem) => {
         const items = item?.items || [];
 
@@ -94,15 +99,15 @@ class Parser {
         };
     };
 
-    static _getItemWithParent = async (item, parentItem) => {
-        const newItem = await this._parseParent(item, parentItem);
-
-        return newItem;
-    };
-
+    /**
+     * Get new array of items by promise.
+     *
+     * @param {Array<Object>} items - Array of objects.
+     * @returns {Array<Object> | Array} - Returns a new array after getting all the elements from the promise.
+     */
     static _getPaginationItems = async (items = []) => {
         const parsedItems = items?.length && await Promise.all(
-            items.map(item => this._getPaginationItem(item))
+            items.map(item => this._parsePaginationItem(item))
         );
 
         const newItems = parsedItems?.length && parsedItems.reduce((acc, item) => acc.concat(item), []);
@@ -110,7 +115,14 @@ class Parser {
         return newItems || [];
     };
 
-    static _parsePagination = async item => {
+    /**
+     * Recursion parse and fetching content.
+     *
+     * @param {Object} item - Input element for parsing.
+     * @returns {Object} - Returns new item object,
+     * with the path in the property(content) replaced to html markup after fetching.
+     */
+    static _parsePaginationItem = async item => {
         const items = item?.items || [];
         const parentItem = item?.parentItem || null;
 
@@ -136,12 +148,6 @@ class Parser {
             ...item,
             isPage: false
         };
-    };
-
-    static _getPaginationItem = async item => {
-        const newItem = await this._parsePagination(item);
-
-        return newItem;
     };
 }
 

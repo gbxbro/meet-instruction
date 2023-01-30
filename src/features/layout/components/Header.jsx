@@ -1,7 +1,9 @@
 import MenuIcon from '@mui/icons-material/Menu';
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 
 import { toggleSidebar } from '../reducer';
 
@@ -82,6 +84,13 @@ class Header extends Component<Props> {
                             variant = 'h6'>
                             Руководство пользователя
                         </Typography>
+                        <Box className = 'search' >
+                            <SearchIcon className = 'search__icon' />
+                            <input
+                                className = 'search__input'
+                                placeholder = 'Поиск...'
+                                type = 'text' />
+                        </Box>
                     </Toolbar>
                 </AppBar>
             </div>

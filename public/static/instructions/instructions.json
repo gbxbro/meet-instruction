@@ -14,25 +14,9 @@
                 "items": []
             },
             {
-                "title": "Пароль на конференцию MAIN",
+                "title": "Пароль на конференцию",
                 "content": "static/instructions/2/2/page.html",
-                "items": [
-                    {
-                        "title": "Пароль на конференцию 1",
-                        "content": "static/instructions/2/2/1/page.html",
-                        "items": []
-                    },
-                    {
-                        "title": "Пароль на конференцию 2",
-                        "content": "static/instructions/2/2/2/page.html",
-                        "items": []
-                    },
-                    {
-                        "title": "Пароль на конференцию 3",
-                        "content": "static/instructions/2/2/3/page.html",
-                        "items": []
-                    }
-                ]
+                "items": []
             },
             {
                 "title": "Режим ожидания",
@@ -45,6 +29,172 @@
         "title": "Комнаты",
         "content": "static/instructions/3/page.html",
         "items": []
+    },
+    {
+        "title": "Элементы управления",
+        "content": "static/instructions/4/page.html",
+        "items": []
+    },
+    {
+        "title": "Изменение отображаемого имени",
+        "content": "static/instructions/5/page.html",
+        "items": []
+    },
+    {
+        "title": "Выбор микрофона и камеры",
+        "content": "static/instructions/6/page.html",
+        "items": []
+    },
+    {
+        "title": "Режимы отображения",
+        "content": "static/instructions/7/page.html",
+        "items": [
+            {
+                "title": "Скрытие локального изображения",
+                "content": "static/instructions/7/1/page.html",
+                "items": []
+            },
+            {
+                "title": "Скрытие участников видео",
+                "content": "static/instructions/7/2/page.html",
+                "items": []
+            }
+        ]
+    },
+    {
+        "title": "Виртуальный фон",
+        "content": "static/instructions/8/page.html",
+        "items": []
+    },
+    {
+        "title": "Список участников",
+        "content": "static/instructions/9/page.html",
+        "items": [
+            {
+                "title": "Закрепление участника",
+                "content": "static/instructions/9/1/page.html",
+                "items": []
+            },
+            {
+                "title": "Поиск участника",
+                "content": "static/instructions/9/2/page.html",
+                "items": []
+            }
+        ]
+    },
+    {
+        "title": "Демонстрация экрана",
+        "content": "static/instructions/10/page.html",
+        "items": []
+    },
+    {
+        "title": "Чат",
+        "content": "static/instructions/11/page.html",
+        "items": [
+            {
+                "title": "Личные сообщения",
+                "content": "static/instructions/11/1/page.html",
+                "items": []
+            },
+            {
+                "title": "Передача файлов",
+                "content": "static/instructions/11/2/page.html",
+                "items": []
+            }
+        ]
+    },
+    {
+        "title": "Опросы, голосания",
+        "content": "static/instructions/12/page.html",
+        "items": []
+    },
+    {
+        "title": "Трансляция",
+        "content": "static/instructions/13/page.html",
+        "items": []
+    },
+    {
+        "title": "Синхроперевод (beta-версия)",
+        "content": "static/instructions/14/page.html",
+        "items": [
+            {
+                "title": "Как пользователю включить синхроперевод",
+                "content": "static/instructions/14/1/page.html",
+                "items": []
+            },
+            {
+                "title": "Настройки синхроперевода",
+                "content": "static/instructions/14/2/page.html",
+                "items": []
+            }
+        ]
+    },
+    {
+        "title": "Функции модератора",
+        "content": "static/instructions/15/page.html",
+        "items": [
+            {
+                "title": "Запись конференции",
+                "content": "static/instructions/15/1/page.html",
+                "items": []
+            },
+            {
+                "title": "Управление микрофоном и камерой удаленных участников",
+                "content": "static/instructions/15/2/page.html",
+                "items": [
+                    {
+                        "title": "Управление микрофоном и камерой у всех участников",
+                        "content": "static/instructions/15/2/1/page.html",
+                        "items": []
+                    },
+                    {
+                        "title": "Управление микрофоном и камерой одного участника",
+                        "content": "static/instructions/15/2/2/page.html",
+                        "items": []
+                    }
+                ]
+            },
+            {
+                "title": "Назначение участника модератором",
+                "content": "static/instructions/15/3/page.html",
+                "items": []
+            },
+            {
+                "title": "Переименование участника",
+                "content": "static/instructions/15/4/page.html",
+                "items": []
+            },
+            {
+                "title": "Удаление участника из конференции",
+                "content": "static/instructions/15/5/page.html",
+                "items": []
+            },
+            {
+                "title": "Режим «Следуй за мной»",
+                "content": "static/instructions/15/6/page.html",
+                "items": []
+            },
+            {
+                "title": "Изменение параметров безопасности",
+                "content": "static/instructions/15/7/page.html",
+                "items": []
+            },
+            {
+                "title": "Перевод участника в зал ожидания",
+                "content": "static/instructions/15/8/page.html",
+                "items": []
+            },
+            {
+                "title": "Скрытие своего изображения",
+                "content": "static/instructions/15/9/page.html",
+                "items": []
+            },
+            {
+                "title": "Завершение конференции",
+                "content": "static/instructions/15/10/page.html",
+                "items": []
+            }
+        ]
     }
 ]
     

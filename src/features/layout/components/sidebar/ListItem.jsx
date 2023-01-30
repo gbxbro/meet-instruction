@@ -3,16 +3,16 @@ import { Collapse, List, ListItemButton, ListItemText } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSidebarActiveItem, setSidebarActiveItemContent } from '../../reducer';
+import { setSidebarActiveItemData, setSidebarActiveItemId } from '../../reducer';
 
 // import SidebarList from './SidebarList';
 
 type Props = {
 
     /**
-     * Defines is item is inset.
+     * Defines is item is nested.
      */
-    isInset: boolean,
+    isNested: boolean,
 
     /**
      * Defines is SidebarItem is active.
@@ -36,12 +36,12 @@ type Props = {
  * @returns {Object}
  */
 const ListItem = ({
-    isInset = false,
+    isNested = false,
     title,
     item
 }: Props) => {
     const dispatch = useDispatch();
-    const { sidebarActiveItem } = useSelector(state => state.layout);
+    const { sidebarActiveItemId } = useSelector(state => state.layout);
 
     const [ isExpanded, setIsExpanded ] = useState(false);
     const [ isActive, setIsActive ] = useState(false);
@@ -55,9 +55,9 @@ const ListItem = ({
      * @returns {void}
      */
     const _onClickItem = useCallback(() => {
-        dispatch(setSidebarActiveItem(id));
-        dispatch(setSidebarActiveItemContent(isInset ? item?.parentItem : item));
-    }, [ id, isInset, item ]);
+        dispatch(setSidebarActiveItemId(id));
+        dispatch(setSidebarActiveItemData(isNested && !item?.items?.length ? item?.parentItem : item));
+    }, [ id, isNested, item ]);
 
     /**
      * Expandable item click handler.
@@ -77,7 +77,9 @@ const ListItem = ({
     /**
      * Defines is item is active.
      */
-    useEffect(() => setIsActive(JSON.stringify(sidebarActiveItem) === JSON.stringify(id)), [ id, sidebarActiveItem ]);
+    useEffect(() => {
+        setIsActive(JSON.stringify(sidebarActiveItemId) === JSON.stringify(id));
+    }, [ id, sidebarActiveItemId ]);
 
     if (items?.length) {
         return (
@@ -86,7 +88,7 @@ const ListItem = ({
                     onClick = { _onClickExpandedItem }
                     selected = { isActive }>
                     <ListItemText
-                        inset = { isInset }
+                        inset = { isNested }
                         primary = { title } />
                     {isExpanded
                         ? <ExpandLess />
@@ -104,7 +106,7 @@ const ListItem = ({
                             // recursion render of React element
                             return (
                                 <ListItem
-                                    isInset = { true }
+                                    isNested = { true }
                                     item = { innerItem }
                                     key = { innerId.map(i => i + 1).join('.') }
                                     title = { `${innerId.map(i => i + 1).join('.')}. ${innerItem?.title}` } />
@@ -122,7 +124,7 @@ const ListItem = ({
                 onClick = { _onClickItem }
                 selected = { isActive }>
                 <ListItemText
-                    inset = { isInset }
+                    inset = { isNested }
                     primary = { title } />
             </ListItemButton>
         </div>

@@ -20,8 +20,8 @@ type InitialState = {
 
 const initialState: InitialState = {
     isShowSidebar: true,
-    sidebarActiveItem: [],
-    sidebarActiveItemContent: null
+    sidebarActiveItemId: [],
+    sidebarActiveItemData: {}
 };
 
 const layoutSlice = createSlice({
@@ -31,14 +31,14 @@ const layoutSlice = createSlice({
         toggleSidebar: state => {
             state.isShowSidebar = !state.isShowSidebar;
         },
-        setSidebarActiveItem: (state, action) => {
-            state.sidebarActiveItem = action.payload;
+        setSidebarActiveItemId: (state, action) => {
+            state.sidebarActiveItemId = action.payload;
         },
-        setSidebarActiveItemContent: (state, action) => {
-            state.sidebarActiveItemContent = action.payload;
+        setSidebarActiveItemData: (state, action) => {
+            state.sidebarActiveItemData = action.payload;
         }
     }
 });
 
-export const { toggleSidebar, setSidebarActiveItem, setitemContent, setSidebarActiveItemContent } = layoutSlice.actions;
+export const { toggleSidebar, setSidebarActiveItemId, setitemContent, setSidebarActiveItemData } = layoutSlice.actions;
 export default layoutSlice.reducer;

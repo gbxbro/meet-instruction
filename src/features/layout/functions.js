@@ -44,12 +44,12 @@ const fetchInstruction = async () => {
  * @returns {Array<Object>}
  */
 const parseInstruction = async items => {
-    const itemsWithContent = await Parser._getItems(items);
-    const itemsWithParent = await Parser._getItemsWithParent(itemsWithContent);
-    const paginationItems = await Parser._getPaginationItems(itemsWithParent);
+    const parsedItems = await Parser._getItems(items);
+    const itemsWithParents = await Parser._getItemsWithParent(parsedItems);
+    const paginationItems = await Parser._getPaginationItems(itemsWithParents);
 
     return {
-        items: itemsWithParent,
+        items: itemsWithParents,
         pagination: paginationItems
     };
 };
