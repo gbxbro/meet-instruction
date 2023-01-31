@@ -104,7 +104,7 @@
         ]
     },
     {
-        "title": "Опросы, голосания",
+        "title": "Опросы, голосования",
         "content": "static/instructions/12/page.html",
         "items": []
     },
@@ -150,6 +150,11 @@
                     {
                         "title": "Управление микрофоном и камерой одного участника",
                         "content": "static/instructions/15/2/2/page.html",
+                        "items": []
+                    },
+                    {
+                        "title": "Управление микрофоном, камерой и демонстрацией экрана у группы участников",
+                        "content": "static/instructions/15/2/3/page.html",
                         "items": []
                     }
                 ]
