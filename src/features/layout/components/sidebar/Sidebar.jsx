@@ -1,5 +1,5 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Box, Divider, Drawer, IconButton, List } from '@mui/material';
+import { Box, Drawer, IconButton, List } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -61,24 +61,20 @@ class Sidebar extends Component<Props> {
         const { _isShowSidebar, instruction } = this.props;
 
         return (
-            <div className = { `sidebar${_isShowSidebar ? ' sidebar_open' : ''}` }>
-                <Drawer
-                    anchor = 'left'
-                    open = { _isShowSidebar }
-                    transitionDuration = {{ appear: 225,
-                        enter: 225,
-                        exit: 225 }}
-                    variant = 'persistent'>
-                    <Box className = 'sidebar__header'>
-                        <Logo className = 'sidebar__logo' />
-                        <IconButton onClick = { this._onToggleSidebar }>
-                            <ChevronLeftIcon />
-                        </IconButton>
-                    </Box>
-                    <Divider />
-                    <div className = 'sidebar__list'>
-                        <List>
-                            {Array.isArray(instruction)
+            <Drawer
+                anchor = 'left'
+                className = { `sidebar${_isShowSidebar ? ' sidebar_open' : ''}` }
+                open = { _isShowSidebar }
+                variant = 'persistent'>
+                <Box className = 'sidebar__header'>
+                    <Logo className = 'sidebar__logo' />
+                    <IconButton onClick = { this._onToggleSidebar }>
+                        <ChevronLeftIcon />
+                    </IconButton>
+                </Box>
+                <div className = 'sidebar__list'>
+                    <List>
+                        {Array.isArray(instruction)
                             && instruction.length > 0
                             && instruction.map(item => {
                                 const id = item?.id || [];
@@ -90,10 +86,9 @@ class Sidebar extends Component<Props> {
                                         title = { `${id.map(i => i + 1).join('.')}. ${item?.title}` } />
                                 );
                             })}
-                        </List>
-                    </div>
-                </Drawer>
-            </div>
+                    </List>
+                </div>
+            </Drawer>
         );
     }
 }

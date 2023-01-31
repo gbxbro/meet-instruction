@@ -27,10 +27,6 @@ body,
     height: 100%;
     display: flex;
 
-    .sidebar {
-
-    }
-
     // .app__inner
     &__inner {
         position: relative;
@@ -42,11 +38,11 @@ body,
         & .header {
             flex: 0 0 auto;
         }
-    
+
         & .main {
             flex: 1 0 auto;
         }
-    
+
         & .footer {
             flex: 0 0 auto;
         }
@@ -82,13 +78,22 @@ body,
 }
 
 .sidebar {
+    position: relative;
     width: 0;
+    visibility: hidden;
+    opacity: 0;
     height: 100%;
-    transition: width 1700ms linear;
+    transition: width 250ms ease-in-out, visibility 250ms ease-in-out, opacity 250ms ease-in-out;
 
     // .sidebar_open
     &_open {
-        width: max-content;
+        width: $sidebar-width;
+        visibility: visible;
+        opacity: 1;
+
+        @include breakpoint($sm-bp) {
+            width: 100vw;
+        }
     }
 
     // .sidebar__link
@@ -105,14 +110,20 @@ body,
 
     // .sidebar__header
     &__header {
+        height: $header-height;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: $sidebar-header-z-index;
         display: flex;
         padding: 0 15px;
         justify-content: space-between;
         align-items: center;
         gap: 10px;
-        height: $header-height;
-        width: 100%;
         background-color: white;
+        border-bottom: 1px solid #e3e3e3;
+        border-right: 1px solid #e3e3e3;
 
         @include breakpoint($xsm-bp) {
             height: $header-height-sm;
@@ -121,46 +132,50 @@ body,
 
     // .sidebar__list
     &__list {
-        padding: 10px 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin-top: $header-height;
     }
 
     // MUI
-    .MuiDrawer-root {
-        width: inherit;
-        height: inherit;
-        transition: width 1700ms linear;
+    .MuiDrawer-paper {
+        position: static;
+        width: 100%;
+        height: 100%;
+    }
 
-        & .MuiDrawer-paper {
-            transition: width 1700ms linear;
-            position: static;
-            width: inherit;
-            height: inherit;
-            display: flex;
-            flex-direction: column;
+    .MuiTypography-root {
+        font-family: "Manrope", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(black, 0.8);
+    }
+
+    .MuiListItemText-inset {
+        padding-left: 20px;
+    }
+
+    .Mui-selected {
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            background-color: $sidebar-active-button;
+            border-radius: 0 4px 4px 0;
         }
 
         .MuiTypography-root {
-            font-family: "Manrope", sans-serif;
-            white-space: nowrap;
-            font-size: 14px;
-            font-weight: 500;
-            color: rgba(black, 0.8);
+            color: $sidebar-active-button;
+            font-weight: 700;
         }
 
-        .MuiListItemText-inset {
-            padding-left: 20px;
-        }
-
-        .Mui-selected {
-            background-color: rgba($sidebar-active-button, 0.4);
-
-            .MuiTypography-root {
-                font-weight: 700;
-            }
-
-            &:hover {
-                background-color: rgba($sidebar-active-button, 0.4);
-            }
+        &:hover {
+            background-color: none;
         }
     }
 }
@@ -244,7 +259,6 @@ body,
 }
 
 .logo {
-
     // .logo__link
     &__link {
         display: block;
@@ -273,7 +287,7 @@ body,
         font-size: 16px;
         padding: 12px 20px 15px 44px;
         width: 160px;
-        transition: width .1s ease-in;
+        transition: width 0.1s ease-in;
 
         &:focus {
             width: 200px;
@@ -287,7 +301,6 @@ body,
 }
 
 .content {
-
     // .content__title
     &__title {
         font-size: 24px;
@@ -315,7 +328,7 @@ body,
     // .instruction__image
     &__image {
         display: block;
-        max-width: 60%;
+        max-width: 100%;
     }
 
     // .instruction__button-icon
@@ -336,10 +349,10 @@ body,
             padding-left: 44px;
 
             &::before {
-                content: '';
+                content: "";
                 width: 24px;
                 height: 24px;
-                background-image: url('../images/icons/error.png');
+                background-image: url("../images/icons/error.png");
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -359,10 +372,10 @@ body,
             padding-left: 44px;
 
             &::before {
-                content: '';
+                content: "";
                 width: 24px;
                 height: 24px;
-                background-image: url('../images/icons/warning.png');
+                background-image: url("../images/icons/warning.png");
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
@@ -377,7 +390,6 @@ body,
 }
 
 .instruction-list {
-
     // .instruction-list__item
     &__item {
         padding: 10px 0;
@@ -392,7 +404,7 @@ body,
                 padding: 0 10px;
                 font-weight: 700;
             }
-    
+
             &:not(:last-child) {
                 border-bottom: 1px solid #000;
             }

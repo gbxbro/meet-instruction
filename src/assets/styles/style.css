@@ -68,14 +68,22 @@ body,
 }
 
 .sidebar {
+  position: relative;
   width: 0;
+  visibility: hidden;
+  opacity: 0;
   height: 100%;
-  transition: width 1700ms linear;
+  transition: width 250ms ease-in-out, visibility 250ms ease-in-out, opacity 250ms ease-in-out;
 }
 .sidebar_open {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: 400px;
+  visibility: visible;
+  opacity: 1;
+}
+@media screen and (max-width: 800px) {
+  .sidebar_open {
+    width: 100vw;
+  }
 }
 .sidebar__link {
   text-decoration: none;
@@ -86,14 +94,20 @@ body,
   padding-top: 5px;
 }
 .sidebar__header {
+  height: 64px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
   display: flex;
   padding: 0 15px;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  height: 64px;
-  width: 100%;
   background-color: white;
+  border-bottom: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3;
 }
 @media screen and (max-width: 600px) {
   .sidebar__header {
@@ -101,39 +115,43 @@ body,
   }
 }
 .sidebar__list {
-  padding: 10px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 64px;
 }
-.sidebar .MuiDrawer-root {
-  width: inherit;
-  height: inherit;
-  transition: width 1700ms linear;
-}
-.sidebar .MuiDrawer-root .MuiDrawer-paper {
-  transition: width 1700ms linear;
+.sidebar .MuiDrawer-paper {
   position: static;
-  width: inherit;
-  height: inherit;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
-.sidebar .MuiDrawer-root .MuiTypography-root {
+.sidebar .MuiTypography-root {
   font-family: "Manrope", sans-serif;
-  white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.8);
 }
-.sidebar .MuiDrawer-root .MuiListItemText-inset {
+.sidebar .MuiListItemText-inset {
   padding-left: 20px;
 }
-.sidebar .MuiDrawer-root .Mui-selected {
-  background-color: rgba(22, 240, 116, 0.4);
+.sidebar .Mui-selected {
+  position: relative;
 }
-.sidebar .MuiDrawer-root .Mui-selected .MuiTypography-root {
+.sidebar .Mui-selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  background-color: #43be78;
+  border-radius: 0 4px 4px 0;
+}
+.sidebar .Mui-selected .MuiTypography-root {
+  color: #43be78;
   font-weight: 700;
 }
-.sidebar .MuiDrawer-root .Mui-selected:hover {
-  background-color: rgba(22, 240, 116, 0.4);
+.sidebar .Mui-selected:hover {
+  background-color: none;
 }
 
 .footer {
@@ -253,7 +271,7 @@ body,
 }
 .instruction__image {
   display: block;
-  max-width: 60%;
+  max-width: 100%;
 }
 .instruction__button-icon {
   display: inline-block;

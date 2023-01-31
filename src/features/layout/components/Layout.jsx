@@ -130,7 +130,7 @@ class Layout extends Component<Props> {
                         className = 'app__content'
                         id = 'app__content'>
                         <main className = 'main'>
-                            <Content items = { parsedInstruction.pagination } />
+                            <Content items = { parsedInstruction.items } />
                         </main>
                         <Footer />
                     </Box>

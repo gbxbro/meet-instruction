@@ -45,13 +45,21 @@ const fetchInstruction = async () => {
  */
 const parseInstruction = async items => {
     const parsedItems = await Parser._getItems(items);
-    const itemsWithParents = await Parser._getItemsWithParent(parsedItems);
-    const paginationItems = await Parser._getPaginationItems(itemsWithParents);
+    const paginationItems = await Parser._getPaginationItems(parsedItems);
 
     return {
-        items: itemsWithParents,
+        items: parsedItems,
         pagination: paginationItems
     };
 };
 
-export { fetchContent, fetchInstruction, parseInstruction };
+/**
+ * Casts an array of identifiers to a string and compares them.
+ *
+ * @param {Array<number>} firstArray - First array of ids.
+ * @param {Array<number>} secondArray - Second array of ids.
+ * @returns {boolean}
+ */
+const compareIds = (firstArray = [], secondArray = []) => JSON.stringify(firstArray) === JSON.stringify(secondArray);
+
+export { fetchContent, fetchInstruction, parseInstruction, compareIds };

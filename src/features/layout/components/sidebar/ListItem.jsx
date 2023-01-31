@@ -3,9 +3,8 @@ import { Collapse, List, ListItemButton, ListItemText } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setSidebarActiveItemData, setSidebarActiveItemId } from '../../reducer';
-
-// import SidebarList from './SidebarList';
+import { compareIds } from '../../functions';
+import { setSidebarActiveItemId } from '../../reducer';
 
 type Props = {
 
@@ -22,12 +21,7 @@ type Props = {
     /**
      * Defines is SidebarItem is expanded.
      */
-    parent: object,
-
-    /**
-     * Defines is SidebarItem is expanded.
-     */
-    item: object,
+    item: Object,
 };
 
 /**
@@ -56,8 +50,7 @@ const ListItem = ({
      */
     const _onClickItem = useCallback(() => {
         dispatch(setSidebarActiveItemId(id));
-        dispatch(setSidebarActiveItemData(isNested && !item?.items?.length ? item?.parentItem : item));
-    }, [ id, isNested, item ]);
+    }, [ id ]);
 
     /**
      * Expandable item click handler.
@@ -78,7 +71,7 @@ const ListItem = ({
      * Defines is item is active.
      */
     useEffect(() => {
-        setIsActive(JSON.stringify(sidebarActiveItemId) === JSON.stringify(id));
+        setIsActive(compareIds(id, sidebarActiveItemId));
     }, [ id, sidebarActiveItemId ]);
 
     if (items?.length) {
