@@ -10,18 +10,18 @@ type InitialState = {
     /**
      * An array containing keys to identify the final active element.
      */
-    sidebarActiveItem: Array<number>,
+    sidebarActiveItemId: Array<number>,
 
     /**
      * Content of active element.
      */
-    sidebarActiveItemContent: string
+    search: string
 }
 
 const initialState: InitialState = {
     isShowSidebar: true,
     sidebarActiveItemId: [],
-    sidebarActiveItemData: {}
+    search: ''
 };
 
 const layoutSlice = createSlice({
@@ -34,11 +34,11 @@ const layoutSlice = createSlice({
         setSidebarActiveItemId: (state, action) => {
             state.sidebarActiveItemId = action.payload;
         },
-        setSidebarActiveItemData: (state, action) => {
-            state.sidebarActiveItemData = action.payload;
+        setSearch: (state, action) => {
+            state.search = action.payload;
         }
     }
 });
 
-export const { toggleSidebar, setSidebarActiveItemId, setitemContent, setSidebarActiveItemData } = layoutSlice.actions;
+export const { toggleSidebar, setSidebarActiveItemId, setitemContent, setSearch } = layoutSlice.actions;
 export default layoutSlice.reducer;

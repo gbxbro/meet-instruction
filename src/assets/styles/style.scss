@@ -277,6 +277,30 @@ body,
         color: #000;
     }
 
+    // .search__close-button
+    &__close-button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+
+        svg {
+            fill: #535353;
+        }
+
+        &:hover {
+            svg {
+                fill: #000;
+            }
+        }
+    }
+
     // .search__form-control
     &__input {
         background-color: rgba(#000, 0.2);

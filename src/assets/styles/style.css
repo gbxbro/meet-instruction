@@ -226,6 +226,24 @@ body,
   transform: translateY(-50%);
   color: #000;
 }
+.search__close-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+.search__close-button svg {
+  fill: #535353;
+}
+.search__close-button:hover svg {
+  fill: #000;
+}
 .search__input {
   background-color: rgba(0, 0, 0, 0.2);
   border: none;

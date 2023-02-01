@@ -42,8 +42,7 @@ class Content extends Component<Props> {
     constructor(props: Props) {
         super(props);
 
-        // this._getPreviousPage = this._getPreviousPage.bind(this);
-        // this._getNextPage = this._getNextPage.bind(this);
+        this._getPaginationPages = this._getPaginationPages.bind(this);
 
         this.state = {
             page: {

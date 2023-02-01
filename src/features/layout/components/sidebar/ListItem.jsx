@@ -2,7 +2,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, List, ListItemButton, ListItemText } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Events, Link, scrollSpy } from 'react-scroll';
+import { Link, scrollSpy } from 'react-scroll';
 
 import { compareIds } from '../../functions';
 import { setSidebarActiveItemId } from '../../reducer';
