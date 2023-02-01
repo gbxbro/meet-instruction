@@ -33,9 +33,6 @@ body,
 .app__inner .header {
   flex: 0 0 auto;
 }
-.app__inner .main {
-  flex: 1 0 auto;
-}
 .app__inner .footer {
   flex: 0 0 auto;
 }
@@ -45,6 +42,7 @@ body,
   height: 100%;
   margin-top: 64px;
   overflow-y: auto;
+  padding: 15px 0;
 }
 @media screen and (max-width: 600px) {
   .app__content {
@@ -57,10 +55,6 @@ body,
   position: absolute;
   left: 0;
   top: 0;
-}
-
-.main {
-  padding: 15px 0;
 }
 
 .home {
@@ -133,10 +127,10 @@ body,
 .sidebar .MuiListItemText-inset {
   padding-left: 20px;
 }
-.sidebar .Mui-selected {
+.sidebar .list-item .active {
   position: relative;
 }
-.sidebar .Mui-selected::before {
+.sidebar .list-item .active::before {
   content: "";
   position: absolute;
   left: 0;
@@ -146,11 +140,11 @@ body,
   background-color: #43be78;
   border-radius: 0 4px 4px 0;
 }
-.sidebar .Mui-selected .MuiTypography-root {
+.sidebar .list-item .active .MuiTypography-root {
   color: #43be78;
   font-weight: 700;
 }
-.sidebar .Mui-selected:hover {
+.sidebar .list-item .active:hover {
   background-color: none;
 }
 
@@ -349,4 +343,11 @@ body,
 }
 .instruction-list_custom-2 .instruction-list__item:not(:last-child) {
   border-bottom: 1px solid #000;
+}
+
+.pagination {
+  padding: 50px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }/*# sourceMappingURL=style.css.map */

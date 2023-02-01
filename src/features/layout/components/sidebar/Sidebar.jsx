@@ -2,8 +2,10 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Box, Drawer, IconButton, List } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { scrollSpy } from 'react-scroll';
 
 import { ListItem, Logo } from '../';
+import { compareIds } from '../../functions';
 import { toggleSidebar } from '../../reducer';
 
 
@@ -13,6 +15,11 @@ type Props = {
      * Defines is sidebar is open.
      */
     _isShowSidebar: boolean,
+
+    /**
+     * Defines is sidebar is open.
+     */
+    _sidebarActiveItemId: Array<number>,
 
     /**
      * Instruction from JSON.
@@ -50,6 +57,21 @@ class Sidebar extends Component<Props> {
      */
     _onToggleSidebar() {
         this.props.dispatch(toggleSidebar());
+    }
+
+    /**
+     * Sets local state (parsedInstruction) after parsing JSON instruction.
+     *
+     * @inheritdoc
+     * @returns {void}
+     */
+    componentDidUpdate(prevProps) {
+        const { _sidebarActiveItemId: prevId } = prevProps;
+        const { _sidebarActiveItemId: id } = this.props;
+
+        if (!compareIds(prevId, id)) {
+            scrollSpy.update();
+        }
     }
 
     /**
@@ -100,10 +122,12 @@ class Sidebar extends Component<Props> {
  * @returns {Object}
  */
 function mapStateToProps(state) {
-    const { isShowSidebar } = state.layout;
+    const { isShowSidebar, sidebarActiveItemId } = state.layout;
 
     return {
-        _isShowSidebar: isShowSidebar
+        _isShowSidebar: isShowSidebar,
+        _sidebarActiveItemId: sidebarActiveItemId
+
     };
 }
 

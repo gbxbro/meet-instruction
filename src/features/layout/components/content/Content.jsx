@@ -1,12 +1,12 @@
 import { Container } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { scroller } from 'react-scroll';
 
 import { compareIds } from '../../functions';
-import Pagination from '../Pagination';
 
 import ContentItem from './ContentItem';
+import Pagination from './Pagination';
+
 
 type Props = {
 
@@ -55,12 +55,8 @@ class Content extends Component<Props> {
     }
 
     _getPaginationPages = (items = [], id = []) => {
-        console.log(id);
-
         for (let i = 0; i < items?.length; i++) {
             if (compareIds(items[i]?.id, id)) {
-                console.log('MEOW');
-
                 const prev = i - 1 >= 0
                     ? items[i - 1]
                     : null;
@@ -78,42 +74,6 @@ class Content extends Component<Props> {
         }
     };
 
-    // /**
-    //  * Co.
-    //  *
-    //  * @param {number} activeItemIndex - Me.
-    //  * @returns {Object}
-    //  */
-    // _getPreviousPage = activeItemIndex => {
-    //     const { items } = this.props;
-
-    //     for (let i = activeItemIndex - 1; i >= 0; i--) {
-    //         if (items[i]?.isPage) {
-    //             return items[i];
-    //         }
-    //     }
-
-    //     return null;
-    // };
-
-    // /**
-    //  * Co.
-    //  *
-    //  * @param {number} activeItemIndex - Me.
-    //  * @returns {Object}
-    //  */
-    // _getNextPage = activeItemIndex => {
-    //     const { items } = this.props;
-
-    //     for (let i = activeItemIndex + 1; i < items.length; i++) {
-    //         if (items[i]?.isPage) {
-    //             return items[i];
-    //         }
-    //     }
-
-    //     return null;
-    // };
-
     /**
      * Sets local state (parsedInstruction) after parsing JSON instruction.
      *
@@ -125,9 +85,6 @@ class Content extends Component<Props> {
         const { items = [], _sidebarActiveItemId: id } = this.props;
 
         if (!compareIds(prevId, id)) {
-            scroller.scrollTo(id.join('.'), {
-                containerId: 'app__content'
-            });
 
             if (items?.length && id?.length) {
                 const pages = this._getPaginationPages(items, [ id[0] ]);
@@ -157,9 +114,14 @@ class Content extends Component<Props> {
         return (
             <section className = 'content'>
                 <Container>
-                    {current && <ContentItem item = { current } />}
-
-                    {/* <Pagination pagination = { items } /> */}
+                    {current && (
+                        <>
+                            <ContentItem item = { current } />
+                            <Pagination
+                                nextPage = { next }
+                                prevPage = { prev } />
+                        </>
+                    )}
                 </Container>
             </section>
         );

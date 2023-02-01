@@ -2,6 +2,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, List, ListItemButton, ListItemText } from '@mui/material';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Events, Link, scrollSpy } from 'react-scroll';
 
 import { compareIds } from '../../functions';
 import { setSidebarActiveItemId } from '../../reducer';
@@ -49,6 +50,8 @@ const ListItem = ({
      * @returns {void}
      */
     const _onClickItem = useCallback(() => {
+        scrollSpy.update();
+
         dispatch(setSidebarActiveItemId(id));
     }, [ id ]);
 
@@ -72,22 +75,33 @@ const ListItem = ({
      */
     useEffect(() => {
         setIsActive(compareIds(id, sidebarActiveItemId));
+
+
     }, [ id, sidebarActiveItemId ]);
 
     if (items?.length) {
         return (
             <div className = 'list-item'>
-                <ListItemButton
-                    onClick = { _onClickExpandedItem }
-                    selected = { isActive }>
-                    <ListItemText
-                        inset = { isNested }
-                        primary = { title } />
-                    {isExpanded
-                        ? <ExpandLess />
-                        : <ExpandMore />
-                    }
-                </ListItemButton>
+                <Link
+                    activeClass = 'active'
+                    containerId = 'app__content'
+                    duration = { 250 }
+                    hashSpy = { true }
+                    isDynamic = { true }
+                    smooth = { true }
+                    spy = { true }
+                    to = { id.length && id.join('.') }>
+                    <ListItemButton
+                        onClick = { _onClickExpandedItem }>
+                        <ListItemText
+                            inset = { isNested }
+                            primary = { title } />
+                        {isExpanded
+                            ? <ExpandLess />
+                            : <ExpandMore />
+                        }
+                    </ListItemButton>
+                </Link>
                 <Collapse
                     in = { isExpanded }
                     timeout = 'auto'
@@ -113,13 +127,22 @@ const ListItem = ({
 
     return (
         <div className = 'list-item'>
-            <ListItemButton
-                onClick = { _onClickItem }
-                selected = { isActive }>
-                <ListItemText
-                    inset = { isNested }
-                    primary = { title } />
-            </ListItemButton>
+            <Link
+                activeClass = 'active'
+                containerId = 'app__content'
+                duration = { 250 }
+                hashSpy = { true }
+                isDynamic = { true }
+                smooth = { true }
+                spy = { true }
+                to = { id.length && id.join('.') }>
+                <ListItemButton
+                    onClick = { _onClickItem }>
+                    <ListItemText
+                        inset = { isNested }
+                        primary = { title } />
+                </ListItemButton>
+            </Link>
         </div>
 
     );
